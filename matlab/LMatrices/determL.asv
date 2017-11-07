@@ -41,38 +41,24 @@ end
 if strcmp('Ledermann', type)
     % construct pre image v
     v = zeros(m, m-1);
-    for c=1:m-1
-       v(c,c) = 1;
-       v(c+1,c) = -1;
+    for k=1:m-1
+       v(k,k) = 1;
+       v(k+1,k) = -1;
     end
+    % w gs image of v    
+    w = gs(v);
+    % last n columns form L Matrix
+    l = w(:, end-(n-1):end);
 end
 
 %% Type I
-if any(strcmp({'TypeI', 'Type I', 'I'}, type))
-    assert(nargin==4, 'determL:not enough input arguments, probably k not specified')
-    assert(2*k <= m+1-n, 'determL: does not fullfill 2k <= m+1-n see Ledermann et al (2011)')
+if any(strcmp({'TypeI', 'Type I', 'I'}, type)
     v = zeros(m, m+1-2*k);
-    for c = 1:m+1-2*k
-       v(c:c+2*k-1, c) = repmat([1;-1],k,1);
+    for k = 1:m+1-2*k
+       v(k, j:j+2k-1) = repmat([1;-1],k,1);
+       
     end
 end
-
-%% Type II
-if any(strcmp({'TypeII', 'Type II', 'II'}, type))
-    assert(nargin==4, 'determL:not enough input arguments, probably k not specified')
-    assert(m-k >= n, 'determL: does not fullfill 2k <= m+1-n see Ledermann et al (2011)')
-    v = zeros(m, m-k);
-    for c = 1:m-k
-       v(c:c+k-1, c) = ones(k,1);
-       v(c+k, c) = -k;
-    end
-end
-
-
-% w gs image of v    
-w = gs(v);
-% last n columns form L Matrix
-l = w(:, end-(n-1):end);
 
 end
 
