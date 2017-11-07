@@ -83,7 +83,6 @@ if any(strcmp({'TypeIII', 'Type III', 'III'}, type))
     end
 end
 
-
 % w gs image of v    
 w = gs(v);
 % last n columns form L Matrix
