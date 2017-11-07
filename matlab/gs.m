@@ -6,7 +6,7 @@ Gram-Schmidt according to Ledermann et al (2011)
 
 Parameters
 ==========
-v: numeric
+v: numeric (two dimensional array)
     G-S pre-image
 
 Output
