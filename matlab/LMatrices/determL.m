@@ -1,6 +1,10 @@
 function [ l ] = determL(type, m, n, k )
 %{
 returns a deterministic L Matrix as described in Ledermann et al (2011)
+    steps:
+        1. find pre image v
+        2. get GS image w
+        3. select n last columns of w
 
 Parameters
 ==========
@@ -39,7 +43,6 @@ if nargin == 4
 end 
 %% Ledermann
 if strcmp('Ledermann', type)
-    % construct pre image v
     v = zeros(m, m-1);
     for c=1:m-1
        v(c,c) = 1;
@@ -65,6 +68,18 @@ if any(strcmp({'TypeII', 'Type II', 'II'}, type))
     for c = 1:m-k
        v(c:c+k-1, c) = ones(k,1);
        v(c+k, c) = -k;
+    end
+end
+
+%% Type III
+if any(strcmp({'TypeIII', 'Type III', 'III'}, type))
+    assert(nargin==4, 'determL:not enough input arguments, probably k not specified')
+    assert(m-2 >= n, 'determL: does not fullfill 2k <= m+1-n see Ledermann et al (2011)')
+    v = zeros(m, m-2);
+    for c = 1:m-2
+       v(c, c) = k;
+       v(c+1, c) = -1;
+       v(c+2, c) = 1-k;
     end
 end
 
