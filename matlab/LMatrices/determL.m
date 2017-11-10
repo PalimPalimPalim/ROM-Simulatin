@@ -1,4 +1,4 @@
-function [ l ] = determL(type, m, n, k )
+defunction [ l ] = determL(type, m, n, k )
 %{
 returns a deterministic L Matrix as described in Ledermann et al (2011)
     Steps:
@@ -46,20 +46,19 @@ if strcmp('Ledermann', type)
        v(c,c) = 1;
        v(c+1,c) = -1;
     end
-end
 
 %% Type I
-if any(strcmp({'TypeI', 'Type I', 'I'}, type))
+elif any(strcmp({'TypeI', 'Type I', 'I'}, type))
     assert(nargin==4, 'determL:not enough input arguments, probably k not specified')
     assert(2*k <= m+1-n, 'determL: does not fullfill 2k <= m+1-n see Ledermann et al (2011)')
     v = zeros(m, m+1-2*k);
     for c = 1:m+1-2*k
        v(c:c+2*k-1, c) = repmat([1;-1],k,1);
     end
-end
+
 
 %% Type II
-if any(strcmp({'TypeII', 'Type II', 'II'}, type))
+elif any(strcmp({'TypeII', 'Type II', 'II'}, type))
     assert(nargin==4, 'determL:not enough input arguments, probably k not specified')
     assert(m-k >= n, 'determL: does not fullfill m-k >= n see Ledermann et al (2011)')
     v = zeros(m, m-k);
